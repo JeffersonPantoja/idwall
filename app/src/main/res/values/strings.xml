@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ID dog</string>
+    <string name="icone_do_id_dog">icone do id dog</string>
+
+    <string name="login_insira_email">Insira um endereço de e-mail válido</string>
+    <string name="login_exemplo_email">dogfun@idwall.co</string>
+    <string name="login_entrar">Entrar</string>
+</resources>
