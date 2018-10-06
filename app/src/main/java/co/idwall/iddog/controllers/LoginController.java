@@ -1,17 +1,12 @@
 package co.idwall.iddog.controllers;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Map;
 
 import co.idwall.iddog.dto.Signup;
-import co.idwall.iddog.model.Usuario;
 import co.idwall.iddog.services.RetrofitInicializador;
 import co.idwall.iddog.ui.activity.LoginActivity;
 import retrofit2.Call;
@@ -21,11 +16,16 @@ import retrofit2.Response;
 public class LoginController {
 
     public static final String ERRO_TRANSMISSÃO = "Erro de transmissão";
-    public static final String MENSAGEM_ERRO = "message";
-    private LoginActivity loginActivity;
+    public static final String MESSAGE = "message";
+    public static final String ERROR = "error";
+    private Context context;
 
-    public void loginEntrar(final Context context, Map<String, String> email){
-        loginActivity = (LoginActivity) context;
+    public LoginController(Context context) {
+        this.context = context;
+    }
+
+    public void loginEntrar(Map<String, String> email){
+        final LoginActivity loginActivity = (LoginActivity) context;
         Call<Signup> call = new RetrofitInicializador(context).getDogSerice().signup(email);
 
         call.enqueue(new Callback<Signup>() {
@@ -44,26 +44,25 @@ public class LoginController {
 
     private void trataRespostaApiDog(Response<Signup> response) {
         Signup signup = response.body();
+        LoginActivity loginActivity = (LoginActivity) context;
         loginActivity.paraLoading();
         if(signup != null){
-            trataRespostaAceita(signup.getUsuario());
+            loginActivity.vaiParaFeed(signup.getUsuario().getToken());
         }else{
             trataRespostaErro(response);
         }
     }
 
-    private void trataRespostaAceita(Usuario usuario) {
-
-    }
-
     private void trataRespostaErro(Response<Signup> response) {
         try {
             JSONObject json = new JSONObject(response.errorBody().string());
-            JSONObject jsonErro = json.getJSONObject("error");
-            loginActivity.exibirMensagemErro(jsonErro.getString("message"));
+            JSONObject jsonErro = json.getJSONObject(ERROR);
+            LoginActivity loginActivity = (LoginActivity) context;
+            loginActivity.exibirMensagemErro(jsonErro.getString(MESSAGE));
 
         } catch (Exception e) {
             e.printStackTrace();
+            LoginActivity loginActivity = (LoginActivity) context;
             loginActivity.exibirMensagemErro(ERRO_TRANSMISSÃO);
         }
     }

@@ -5,5 +5,7 @@
     <string name="login_insira_email">Insira um endereço de e-mail válido</string>
     <string name="login_exemplo_email">dogfun@idwall.co</string>
     <string name="login_entrar">Entrar</string>
+    <string name="login_entendido">Entendido</string>
+
     <string name="url_api_dog">https://api-iddog.idwall.co/</string>
 </resources>

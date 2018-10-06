@@ -1,10 +1,12 @@
 package co.idwall.iddog.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,16 +18,22 @@ import java.util.Map;
 import co.idwall.iddog.R;
 import co.idwall.iddog.controllers.LoginController;
 
-public class LoginActivity extends AppCompatActivity {
+import static co.idwall.iddog.ui.activity.ConstantesActivity.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.ui.activity.ConstantesActivity.TOKEN;
 
+public class LoginActivity extends AppCompatActivity {
     private Button botaoEntrar;
     private ProgressBar loading;
-    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        SharedPreferences preferences = getSharedPreferences(PREFERENCIAS_DO_USUARIO, MODE_PRIVATE);
+        if(preferences.contains(TOKEN)){
+            vaiParaFeed(preferences.getString(TOKEN,null));
+        }
 
         configuraBotaoEntrar();
     }
@@ -41,15 +49,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View botao) {
                 ativarLoading();
-                new LoginController().loginEntrar(LoginActivity.this, recuperaEMapeaEmail());
+                new LoginController(LoginActivity.this).loginEntrar(recuperaEMapeaEmail());
             }
         };
-    }
-
-    private void ativarLoading() {
-        botaoEntrar.setVisibility(View.GONE);
-        loading = findViewById(R.id.login_progresbar);
-        loading.setVisibility(View.VISIBLE);
     }
 
     private Map<String, String> recuperaEMapeaEmail() {
@@ -57,6 +59,12 @@ public class LoginActivity extends AppCompatActivity {
         Map<String, String> emailMap = new HashMap<>();
         emailMap.put("email",email.getText().toString());
         return emailMap;
+    }
+
+    private void ativarLoading() {
+        botaoEntrar.setVisibility(View.GONE);
+        loading = findViewById(R.id.login_progresbar);
+        loading.setVisibility(View.VISIBLE);
     }
 
     public void paraLoading(){
@@ -67,13 +75,20 @@ public class LoginActivity extends AppCompatActivity {
     public void exibirMensagemErro(String mensagemErro) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mensagemErro)
-                .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.login_entendido, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
         });
 
-        dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void vaiParaFeed(String token) {
+        Intent vaiParaFeed = new Intent(this, FeedActivity.class);
+        vaiParaFeed.putExtra(TOKEN, token);
+        startActivity(vaiParaFeed);
+        finish();
     }
 }
