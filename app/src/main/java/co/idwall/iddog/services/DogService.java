@@ -7,6 +7,7 @@ import co.idwall.iddog.model.Usuario;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
@@ -23,4 +24,8 @@ public interface DogService {
     @Headers("Content-Type: application/json")
     @POST("Signup")
     Call<Signup> signup(@QueryMap Map<String, String> email);
+
+//    @Headers("Content-Type: application/json")
+//    @GET
+//    Call<>
 }

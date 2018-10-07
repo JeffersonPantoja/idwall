@@ -1,10 +1,13 @@
 package co.idwall.iddog.ui.activity;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import co.idwall.iddog.R;
+import co.idwall.iddog.ui.adapter.FeedPaginaAdapter;
 import co.idwall.iddog.util.PreferencesUtil;
 
 import static co.idwall.iddog.ui.activity.ConstantesActivity.TOKEN;
@@ -17,8 +20,7 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
 
         validaToken();
-
-
+        configuraTabs();
     }
 
     private void validaToken() {
@@ -29,6 +31,14 @@ public class FeedActivity extends AppCompatActivity {
         }else {
             vaiParaLogin();
         }
+    }
+
+    private void configuraTabs() {
+        ViewPager viewPager = findViewById(R.id.feed_viewpage);
+        viewPager.setAdapter(new FeedPaginaAdapter(getSupportFragmentManager()));
+
+        TabLayout tabLayout = findViewById(R.id.feed_tab);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void vaiParaLogin() {
