@@ -21,7 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-
             <ImageView
                 android:id="@+id/item_dogfun"
                 android:layout_width="80dp"
@@ -33,6 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars[13]" />
+
 
         </android.support.constraint.ConstraintLayout>
 

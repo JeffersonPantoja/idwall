@@ -1,8 +1,10 @@
 package co.idwall.iddog.ui.fragment;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,15 +16,18 @@ import java.util.List;
 import co.idwall.iddog.R;
 import co.idwall.iddog.controllers.FeedController;
 import co.idwall.iddog.model.FeedCategoria;
+import co.idwall.iddog.ui.activity.DogExpandidoActivity;
 import co.idwall.iddog.ui.adapter.ListaFeedAdapter;
+import co.idwall.iddog.ui.listener.OnItemClickListener;
 
 import static android.content.Context.MODE_PRIVATE;
 import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
 import static co.idwall.iddog.ui.Constantes.TOKEN;
+import static co.idwall.iddog.ui.Constantes.URL_DOG;
 
 public class FeedFragment extends Fragment {
 
-    public static final String CATEGORIA = "CATEGORIA";
+    private static final String CATEGORIA = "CATEGORIA";
     private View view;
 
     public static FeedFragment newInstance(String categoria) {
@@ -39,22 +44,16 @@ public class FeedFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_feed, container, false);
-        return view;
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
         buscaFeed();
+        return view;
     }
 
     private void buscaFeed() {
         SharedPreferences preferences = getContext().getSharedPreferences(PREFERENCIAS_DO_USUARIO, MODE_PRIVATE);
-        if(preferences.contains(TOKEN)){
-            String token = preferences.getString(TOKEN,null);
+        if (preferences.contains(TOKEN)) {
+            String token = preferences.getString(TOKEN, null);
             String categoria = getArguments().getString(CATEGORIA);
             new FeedController(getContext(), this).buscarFeed(token, categoria);
         }
@@ -68,6 +67,19 @@ public class FeedFragment extends Fragment {
 
     private void configuraAdapter(List<String> listaUrlsDog, RecyclerView listaFeed) {
         ListaFeedAdapter adapter = new ListaFeedAdapter(getContext(), listaUrlsDog);
+        adapter.setOnItemClickListener(exibiDogExpandido());
         listaFeed.setAdapter(adapter);
+    }
+
+    @NonNull
+    private OnItemClickListener exibiDogExpandido() {
+        return new OnItemClickListener() {
+            @Override
+            public void onItemClick(String urldog) {
+                Intent vaiParaExibeDogExpandido = new Intent(getContext(), DogExpandidoActivity.class);
+                vaiParaExibeDogExpandido.putExtra(URL_DOG,urldog);
+                startActivity(vaiParaExibeDogExpandido);
+            }
+        };
     }
 }

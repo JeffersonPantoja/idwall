@@ -17,6 +17,7 @@ import java.util.Map;
 
 import co.idwall.iddog.R;
 import co.idwall.iddog.controllers.LoginController;
+import co.idwall.iddog.ui.util.DialogUtil;
 
 import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
 import static co.idwall.iddog.ui.Constantes.TOKEN;
@@ -73,16 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void exibirMensagemErro(String mensagemErro) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(mensagemErro)
-                .setPositiveButton(R.string.login_entendido, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        DialogUtil.exibirMensagemErro(this, mensagemErro);
     }
 
     public void vaiParaFeed(String token) {

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ID dog</string>
+    <string name="icone_do_id_dog">icon id dog</string>
+    <string name="url_api_dog">https://api-iddog.idwall.co/</string>
+
+    <string name="login_insira_email">Insert a valid e-mail address</string>
+    <string name="login_exemplo_email">dogfun@idwall.co</string>
+    <string name="login_entrar">Enter</string>
+    <string name="login_entendido">Understood</string>
+
+    <string name="imagem_dogfun">dog fun image</string>
+    <string name="imagem_dogfun_expandida">dog fun image expanded</string>
+
+    <string name="controller_erro_transmissao">Transmission error</string>
+</resources>

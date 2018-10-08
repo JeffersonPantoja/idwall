@@ -1,10 +1,11 @@
 package co.idwall.iddog.controllers;
 
 import android.content.Context;
-import android.widget.Toast;
 
+import co.idwall.iddog.R;
 import co.idwall.iddog.model.FeedCategoria;
 import co.idwall.iddog.services.RetrofitInicializador;
+import co.idwall.iddog.ui.activity.FeedActivity;
 import co.idwall.iddog.ui.fragment.FeedFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,23 +22,32 @@ public class FeedController {
     }
 
     public void buscarFeed(String token, String categoria){
-
-
         Call<FeedCategoria> call = new RetrofitInicializador(context).getDogSerice().feed(token, categoria);
-
         call.enqueue(new Callback<FeedCategoria>() {
             @Override
             public void onResponse(Call<FeedCategoria> call, Response<FeedCategoria> response) {
-                FeedCategoria feedCategoria = response.body();
-                feed.configuraRecycleView(feedCategoria);
+                trataRespostaApiDog(response);
             }
 
             @Override
             public void onFailure(Call<FeedCategoria> call, Throwable t) {
-                Toast.makeText(context, "falha", Toast.LENGTH_LONG).show();
+                exibemensagemErro();
             }
         });
     }
 
+    private void trataRespostaApiDog(Response<FeedCategoria> response) {
+        FeedCategoria feedCategoria = response.body();
+        if(feedCategoria != null){
+            feed.configuraRecycleView(feedCategoria);
+        }else{
+            exibemensagemErro();
+        }
+    }
+
+    private void exibemensagemErro() {
+        FeedActivity feedActivity = (FeedActivity) context;
+        feedActivity.exibirMensagemErro(context.getResources().getString(R.string.controller_erro_transmissao));
+    }
 
 }
