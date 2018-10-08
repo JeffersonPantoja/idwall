@@ -18,8 +18,8 @@ import java.util.Map;
 import co.idwall.iddog.R;
 import co.idwall.iddog.controllers.LoginController;
 
-import static co.idwall.iddog.ui.activity.ConstantesActivity.PREFERENCIAS_DO_USUARIO;
-import static co.idwall.iddog.ui.activity.ConstantesActivity.TOKEN;
+import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.ui.Constantes.TOKEN;
 
 public class LoginActivity extends AppCompatActivity {
     private Button botaoEntrar;

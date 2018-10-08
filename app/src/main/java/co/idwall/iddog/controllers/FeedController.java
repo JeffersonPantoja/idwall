@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import co.idwall.iddog.model.FeedCategoria;
 import co.idwall.iddog.services.RetrofitInicializador;
+import co.idwall.iddog.ui.fragment.FeedFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -12,9 +13,11 @@ import retrofit2.Response;
 public class FeedController {
 
     private final Context context;
+    private FeedFragment feed;
 
-    public FeedController(Context context) {
+    public FeedController(Context context, FeedFragment feed) {
         this.context = context;
+        this.feed = feed;
     }
 
     public void buscarFeed(String token, String categoria){
@@ -26,7 +29,7 @@ public class FeedController {
             @Override
             public void onResponse(Call<FeedCategoria> call, Response<FeedCategoria> response) {
                 FeedCategoria feedCategoria = response.body();
-
+                feed.configuraRecycleView(feedCategoria);
             }
 
             @Override

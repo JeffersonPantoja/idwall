@@ -1,12 +1,12 @@
-package co.idwall.iddog.util;
+package co.idwall.iddog.ui.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import static android.content.Context.MODE_PRIVATE;
-import static co.idwall.iddog.ui.activity.ConstantesActivity.JA_ABRIU_APP;
-import static co.idwall.iddog.ui.activity.ConstantesActivity.PREFERENCIAS_DO_USUARIO;
-import static co.idwall.iddog.ui.activity.ConstantesActivity.TOKEN;
+import static co.idwall.iddog.ui.Constantes.JA_ABRIU_APP;
+import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.ui.Constantes.TOKEN;
 
 public class PreferencesUtil {
 

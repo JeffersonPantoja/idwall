@@ -1,6 +1,6 @@
-package co.idwall.iddog.ui.activity;
+package co.idwall.iddog.ui;
 
-public interface ConstantesActivity {
+public interface Constantes {
 
     String PREFERENCIAS_DO_USUARIO = "preferencias_usuario";
     String JA_ABRIU_APP = "ja_abriu_app";

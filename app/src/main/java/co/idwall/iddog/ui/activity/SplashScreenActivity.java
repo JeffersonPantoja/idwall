@@ -7,10 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import co.idwall.iddog.R;
-import co.idwall.iddog.util.PreferencesUtil;
+import co.idwall.iddog.ui.util.PreferencesUtil;
 
-import static co.idwall.iddog.ui.activity.ConstantesActivity.JA_ABRIU_APP;
-import static co.idwall.iddog.ui.activity.ConstantesActivity.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.ui.Constantes.JA_ABRIU_APP;
+import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

@@ -10,13 +10,13 @@ public class FeedCategoria {
     private String categoria;
 
     @JsonProperty("list")
-    private List<String> imagemDog;
+    private List<String> listaUrlsDog;
 
     public String getCategoria() {
         return categoria;
     }
 
-    public List<String> getImagemDog() {
-        return imagemDog;
+    public List<String> getListaUrlsDog() {
+        return listaUrlsDog;
     }
 }
