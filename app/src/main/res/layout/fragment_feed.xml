@@ -7,18 +7,48 @@
     tools:context=".ui.fragment.FeedFragment">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/feed_lista"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/feed_swipe"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager"
-        app:spanCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias=".5"
-        tools:listitem="@layout/item_dogfund" />
+        app:layout_constraintHorizontal_bias=".5">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/feed_lista"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:listitem="@layout/item_dogfund" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+    <ProgressBar
+        android:id="@+id/feed_progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/feed_swipe_info"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_swipe_down"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

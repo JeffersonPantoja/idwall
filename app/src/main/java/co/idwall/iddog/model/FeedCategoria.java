@@ -19,4 +19,5 @@ public class FeedCategoria {
     public List<String> getListaUrlsDog() {
         return listaUrlsDog;
     }
+
 }

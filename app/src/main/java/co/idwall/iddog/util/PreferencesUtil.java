@@ -1,4 +1,4 @@
-package co.idwall.iddog.ui.util;
+package co.idwall.iddog.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,6 +15,14 @@ public class PreferencesUtil {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(JA_ABRIU_APP, valor);
         editor.commit();
+    }
+
+
+    public static void deletaTokenIvalido(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCIAS_DO_USUARIO, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(TOKEN);
+        editor.apply();
     }
 
     public static void salvaToken(Context context, String token) {

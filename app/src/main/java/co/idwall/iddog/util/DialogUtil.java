@@ -1,4 +1,4 @@
-package co.idwall.iddog.ui.util;
+package co.idwall.iddog.util;
 
 import android.content.Context;
 import android.content.DialogInterface;

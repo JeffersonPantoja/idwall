@@ -9,7 +9,10 @@ import java.util.Map;
 import co.idwall.iddog.R;
 import co.idwall.iddog.dto.Signup;
 import co.idwall.iddog.services.RetrofitInicializador;
+import co.idwall.iddog.ui.activity.FeedActivity;
 import co.idwall.iddog.ui.activity.LoginActivity;
+import co.idwall.iddog.util.ActivityUtil;
+import co.idwall.iddog.util.DialogUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,19 +39,17 @@ public class LoginController {
 
             @Override
             public void onFailure(Call<Signup> call, Throwable t) {
-                LoginActivity loginActivity = (LoginActivity) context;
-                loginActivity.paraLoading();
-
+                paraLoading();
             }
         });
     }
 
     private void trataRespostaApiDog(Response<Signup> response) {
         Signup signup = response.body();
-        LoginActivity loginActivity = (LoginActivity) context;
-        loginActivity.paraLoading();
+        paraLoading();
         if(signup != null){
-            loginActivity.vaiParaFeed(signup.getUsuario().getToken());
+            String token = signup.getUsuario().getToken();
+            ActivityUtil.vaiParaOutraActivityComExtra(context, token, FeedActivity.class);
         }else{
             trataRespostaErro(response);
         }
@@ -58,13 +59,16 @@ public class LoginController {
         try {
             JSONObject json = new JSONObject(response.errorBody().string());
             JSONObject jsonErro = json.getJSONObject(ERROR);
-            LoginActivity loginActivity = (LoginActivity) context;
-            loginActivity.exibirMensagemErro(jsonErro.getString(MESSAGE));
+            DialogUtil.exibirMensagemErro(context,jsonErro.getString(MESSAGE));
 
         } catch (Exception e) {
             e.printStackTrace();
-            LoginActivity loginActivity = (LoginActivity) context;
-            loginActivity.exibirMensagemErro(context.getResources().getString(R.string.controller_erro_transmissao));
+            DialogUtil.exibirMensagemErro(context,context.getResources().getString(R.string.controller_erro_transmissao));
         }
+    }
+
+    private void paraLoading() {
+        LoginActivity loginActivity = (LoginActivity) context;
+        loginActivity.paraLoading();
     }
 }

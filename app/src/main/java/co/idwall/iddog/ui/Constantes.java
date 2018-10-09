@@ -1,9 +1,8 @@
 package co.idwall.iddog.ui;
 
-import com.squareup.picasso.Picasso;
-
 public interface Constantes {
 
+    String EMAIL = "email";
     String PREFERENCIAS_DO_USUARIO = "preferencias_usuario";
     String JA_ABRIU_APP = "ja_abriu_app";
     String TOKEN = "token";
