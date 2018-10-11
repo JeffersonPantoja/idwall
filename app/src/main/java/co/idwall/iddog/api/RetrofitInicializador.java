@@ -1,15 +1,19 @@
 package co.idwall.iddog.api;
 
-import co.idwall.iddog.BuildConfig;
 import co.idwall.iddog.api.services.DogService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+
 public class RetrofitInicializador {
 
-    public final Retrofit retrofit;
+    private final Retrofit retrofit;
+
+    public Retrofit getRetrofit() {
+        return retrofit;
+    }
 
     public RetrofitInicializador(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -17,8 +21,9 @@ public class RetrofitInicializador {
 
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.addInterceptor(interceptor);
+
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://api-iddog.idwall.co/")
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(client.build())
                 .build();

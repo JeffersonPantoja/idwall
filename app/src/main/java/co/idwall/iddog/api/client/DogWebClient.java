@@ -19,13 +19,6 @@ import static co.idwall.iddog.Constantes.ERRO_DE_TRANSMISSÃO;
 
 public class DogWebClient {
 
-
-    private final DogService service;
-
-    public DogWebClient() {
-        service = new RetrofitInicializador().getDogSerice();
-    }
-
     public void buscarFeed(String token, String categoria, final FeedProcessado listener){
         Call<FeedCategoria> call = new RetrofitInicializador().getDogSerice().feed(token, categoria);
         call.enqueue(new Callback<FeedCategoria>() {
@@ -79,7 +72,7 @@ public class DogWebClient {
 
     private ErroResponse pegaErro(ResponseBody responseBody) throws IOException {
         Converter<ResponseBody, ErroResponse> errorConverter;
-        errorConverter = new RetrofitInicializador().retrofit
+        errorConverter = new RetrofitInicializador().getRetrofit()
                 .responseBodyConverter(ErroResponse.class, new Annotation[0]);
 
         return errorConverter.convert(responseBody);

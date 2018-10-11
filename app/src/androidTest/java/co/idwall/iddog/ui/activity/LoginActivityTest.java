@@ -1,11 +1,12 @@
 package co.idwall.iddog.ui.activity;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.test.InstrumentationTestCase;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -17,9 +18,13 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 import co.idwall.iddog.R;
+import co.idwall.iddog.api.Constants;
+import co.idwall.iddog.mock.MockHelper;
+import co.idwall.iddog.mock.Mocks;
+import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
-import static android.app.Instrumentation.*;
+import static android.app.Instrumentation.ActivityResult;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -31,12 +36,11 @@ import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withInputType;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
-public class LoginActivityTest {
+public class LoginActivityTest extends InstrumentationTestCase {
 
     private MockWebServer server;
 
@@ -44,16 +48,17 @@ public class LoginActivityTest {
     public ActivityTestRule<LoginActivity> activityTestRule =
             new ActivityTestRule<>(LoginActivity.class, false, true);
 
+
     @Before
     public void setUp() throws Exception {
+        super.setUp();
         server = new MockWebServer();
         server.start();
+        injectInstrumentation(InstrumentationRegistry.getInstrumentation());
+        Constants.BASE_URL = server.url("/").toString();
     }
 
-    @After
-    public void tearDown() throws IOException {
-        server.shutdown();
-    }
+
 
     @Test
     public void deve_ExibirViews_QuandoActivityInicia(){
@@ -64,12 +69,14 @@ public class LoginActivityTest {
     }
 
 //    @Test
-//    public void deve_ExibirDialogo_QuandoEditTextEhEstaVazioEBotaoEhClicado(){
+//    public void deve_ExibirDialogo_QuandoEditTextEhEstaVazioEBotaoEhClicado() throws Exception {
+//        server.enqueue(new MockResponse()
+//                .setResponseCode(200)
+//                .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(),Mocks.SIGNUP_ERRO)));
+//
 //        onView(withId(R.id.login_email)).perform(clearText());
 //        onView(withId(R.id.login_entrar)).perform(click());
 //        onView(withText(R.string.login_email_invalido)).check(matches(isDisplayed()));
-////        onView(withText(R.string.login_entendido)).perform(click());
-////        onView(withText(R.string.login_entendido)).check(matches(not(isDisplayed())));
 //    }
 
 //    @Test
@@ -78,19 +85,30 @@ public class LoginActivityTest {
 //        onView(withId(R.id.login_progresbar)).check(matches(isDisplayed()));
 //    }
 
+
     @Test
-    public void deve_IrParaFeedActivity_QuandoBotaoEntrarEhClicadoComEmailValido(){
+    public void deve_IrParaFeedActivity_QuandoBotaoEntrarEhClicadoComEmailValido() throws Exception {
         Intents.init();
-        onView(withId(R.id.login_email)).perform(typeText("dogfun@idwall.co"),closeSoftKeyboard());
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(),Mocks.SIGNUP_SUCESSO)));
+
+        onView(withId(R.id.login_email)).perform(typeText("jeffkd35@gmail.com"),closeSoftKeyboard());
         Matcher<Intent> matcher = hasComponent(FeedActivity.class.getName());
 
 
         ActivityResult resultado = new ActivityResult(Activity.RESULT_OK,null);
         intending(matcher).respondWith(resultado);
 
+
         onView(withId(R.id.login_entrar)).perform(click());
         intended(matcher);
         Intents.release();
+    }
+
+    @After
+    public void tearDown() throws IOException {
+        server.shutdown();
     }
 
 }

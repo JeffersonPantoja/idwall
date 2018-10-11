@@ -1,0 +1,10 @@
+{
+  "user": {
+    "_id": "5bb8f8a95a94018a5ca5ced2",
+    "email": "jeffkd35@gmail.com",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJpZGRvZy1zZXJ2aWNlIiwic3ViIjoiNWJiOGY4YTk1YTk0MDE4YTVjYTVjZWQyIiwiaWF0IjoxNTM4ODQ4OTM3LCJleHAiOjE1NDAxNDQ5Mzd9.umDv6KYauUNBq865m_xT2XKrw5yCz5RKNx7-_0qvEwA",
+    "createdAt": "2018-10-06T18:02:17.068Z",
+    "updatedAt": "2018-10-06T18:02:17.068Z",
+    "__v": 0
+  }
+}
