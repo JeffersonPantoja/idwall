@@ -19,47 +19,35 @@ import static co.idwall.iddog.Constantes.ERRO_DE_TRANSMISSÃO;
 
 public class DogWebClient {
 
-    public void buscarFeed(String token, String categoria, final FeedProcessado listener){
-        Call<FeedCategoria> call = new RetrofitInicializador().getDogSerice().feed(token, categoria);
-        call.enqueue(new Callback<FeedCategoria>() {
-            @Override
-            public void onResponse(Call<FeedCategoria> call, Response<FeedCategoria> response) {
-                if(response.isSuccessful()){
-                    listener.sucesso(response.body().getListaUrlsDog());
-                }else{
-                    try {
-                        ErroResponse error = pegaErro(response.errorBody());
-                        listener.falha(error.getErro().getMensagem());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        listener.falha(null);
-                    }
-                }
-            }
+    private final RetrofitInicializador retrofitInicializador;
 
-            @Override
-            public void onFailure(Call<FeedCategoria> call, Throwable t) {
-                listener.falha(null);
-            }
-        });
+    public DogWebClient() {
+        retrofitInicializador = new RetrofitInicializador();
     }
 
     public void loginEntrar(Map<String, String> email, final LoginProcessado listener){
 
-        Call<Signup> call = new RetrofitInicializador().getDogSerice().signup(email);
+        Call<Signup> call = retrofitInicializador.getDogSerice().signup(email);
         call.enqueue(new Callback<Signup>() {
             @Override
             public void onResponse(Call<Signup> call, Response<Signup> response) {
-                if(response.isSuccessful()){
-                    String token = response.body().getUsuario().getToken();
-                    listener.sucesso(token);
-                }else{
-                    try {
-                        ErroResponse error = pegaErro(response.errorBody());
-                        listener.falha(error.getErro().getMensagem());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
+                switch (response.code()) {
+                    case 200:
+                        String token = response.body().getUsuario().getToken();
+                        listener.sucesso(token);
+                        break;
+                    case 400:
+                        try {
+                            ErroResponse error = pegaErro(response.errorBody());
+                            listener.falha(error.getErro().getMensagem());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            listener.falha(ERRO_DE_TRANSMISSÃO);
+                        }
+                        break;
+                    default:
+                        listener.falha(ERRO_DE_TRANSMISSÃO);
                 }
             }
 
@@ -70,9 +58,40 @@ public class DogWebClient {
         });
     }
 
+    public void buscaFeed(String token, String categoria, final FeedProcessado listener){
+        Call<FeedCategoria> call = retrofitInicializador.getDogSerice().feed(token, categoria);
+        call.enqueue(new Callback<FeedCategoria>() {
+            @Override
+            public void onResponse(Call<FeedCategoria> call, Response<FeedCategoria> response) {
+
+                switch (response.code()){
+                    case 200:
+                        listener.sucesso(response.body().getListaUrlsDog());
+                        break;
+                    case 401:
+                        try {
+                            ErroResponse error = pegaErro(response.errorBody());
+                            listener.falha(error.getErro().getMensagem());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            listener.falha(null);
+                        }
+                        break;
+                    default:
+                        listener.falha(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FeedCategoria> call, Throwable t) {
+                listener.falha(null);
+            }
+        });
+    }
+
     private ErroResponse pegaErro(ResponseBody responseBody) throws IOException {
         Converter<ResponseBody, ErroResponse> errorConverter;
-        errorConverter = new RetrofitInicializador().getRetrofit()
+        errorConverter = retrofitInicializador.getRetrofit()
                 .responseBodyConverter(ErroResponse.class, new Annotation[0]);
 
         return errorConverter.convert(responseBody);

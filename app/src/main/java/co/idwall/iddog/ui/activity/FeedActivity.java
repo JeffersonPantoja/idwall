@@ -20,18 +20,22 @@ public class FeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        validaToken();
+        validaAcesso();
         configuraTabs();
     }
 
-    private void validaToken() {
+    private void validaAcesso() {
         Intent intent = getIntent();
-        if(intent.hasExtra(TOKEN)){
+        if(temToken(intent)){
             String token = intent.getStringExtra(TOKEN);
             PreferencesUtil.salvaToken(this, token);
         }else {
             ActivityUtil.vaiParaOutraActivity(this, LoginActivity.class);
         }
+    }
+
+    private boolean temToken(Intent intent) {
+        return intent.hasExtra(TOKEN);
     }
 
     private void configuraTabs() {

@@ -5,10 +5,8 @@ import co.idwall.iddog.api.client.FeedProcessado;
 
 public class FeedController {
 
-    public void buscarFeed(String token, String categoria, FeedProcessado listner){
+    public void buscaFeed(String token, String categoria, FeedProcessado listner){
         DogWebClient client = new DogWebClient();
-        client.buscarFeed(token,categoria,listner);
+        client.buscaFeed(token,categoria,listner);
     }
-
-
 }

@@ -32,13 +32,20 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        vaiParaFeed();
+        configuraBotaoEntrar();
+    }
+
+    public void vaiParaFeed() {
         SharedPreferences preferences = getSharedPreferences(PREFERENCIAS_DO_USUARIO, MODE_PRIVATE);
-        if(preferences.contains(TOKEN)){
+        if(temToken(preferences)){
             String token = preferences.getString(TOKEN, null);
             ActivityUtil.vaiParaOutraActivityComExtra(this, token, FeedActivity.class);
         }
+    }
 
-        configuraBotaoEntrar();
+    private boolean temToken(SharedPreferences preferences) {
+        return preferences.contains(TOKEN);
     }
 
     private void configuraBotaoEntrar() {
@@ -52,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View botao) {
                 ativarLoading();
-                new LoginController().loginEntrar(recuperaEMapeaEmail(), processaLogin());
+                new LoginController().loginEntrar(mapeaEmail(), processaLogin());
             }
         };
     }
@@ -74,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         };
     }
 
-    private Map<String, String> recuperaEMapeaEmail() {
+    private Map<String, String> mapeaEmail() {
         EditText email = findViewById(R.id.login_email);
         Map<String, String> emailMap = new HashMap<>();
         emailMap.put(EMAIL,email.getText().toString());
