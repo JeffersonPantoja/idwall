@@ -8,7 +8,13 @@ import co.idwall.iddog.R;
 
 public class DialogUtil {
 
-    public static void exibirMensagemErro(Context context, String mensagemErro) {
+    private Context context;
+
+    public DialogUtil(Context context) {
+        this.context = context;
+    }
+
+    public  void exibirMensagemErro(String mensagemErro) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(mensagemErro)
                 .setPositiveButton(R.string.login_entendido, new DialogInterface.OnClickListener() {

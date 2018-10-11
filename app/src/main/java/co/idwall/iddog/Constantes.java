@@ -1,4 +1,4 @@
-package co.idwall.iddog.ui;
+package co.idwall.iddog;
 
 public interface Constantes {
 
@@ -10,4 +10,5 @@ public interface Constantes {
     String MESSAGE = "message";
     String ERROR = "error";
     String URL_DOG = "urlDog";
+    String ERRO_DE_TRANSMISSÃO = "Erro de Transmissão";
 }

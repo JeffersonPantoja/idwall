@@ -9,8 +9,8 @@ import co.idwall.iddog.R;
 import co.idwall.iddog.util.ActivityUtil;
 import co.idwall.iddog.util.PreferencesUtil;
 
-import static co.idwall.iddog.ui.Constantes.JA_ABRIU_APP;
-import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.Constantes.JA_ABRIU_APP;
+import static co.idwall.iddog.Constantes.PREFERENCIAS_DO_USUARIO;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

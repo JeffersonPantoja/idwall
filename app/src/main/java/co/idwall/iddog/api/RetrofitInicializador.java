@@ -1,8 +1,6 @@
-package co.idwall.iddog.services;
+package co.idwall.iddog.api;
 
-import android.content.Context;
-
-import co.idwall.iddog.R;
+import co.idwall.iddog.api.services.DogService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -10,9 +8,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RetrofitInicializador {
 
-    private final Retrofit retrofit;
+    public final Retrofit retrofit;
 
-    public RetrofitInicializador(Context context){
+    public RetrofitInicializador(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -20,7 +18,7 @@ public class RetrofitInicializador {
         client.addInterceptor(interceptor);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.url_api_dog))
+                .baseUrl("https://api-iddog.idwall.co/")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(client.build())
                 .build();

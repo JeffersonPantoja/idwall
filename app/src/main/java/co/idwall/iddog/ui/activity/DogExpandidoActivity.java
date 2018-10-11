@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso;
 
 import co.idwall.iddog.R;
 
-import static co.idwall.iddog.ui.Constantes.URL_DOG;
+import static co.idwall.iddog.Constantes.URL_DOG;
 
 public class DogExpandidoActivity extends AppCompatActivity {
 

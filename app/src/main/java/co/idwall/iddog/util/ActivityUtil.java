@@ -9,7 +9,7 @@ import android.support.v7.app.AlertDialog;
 import co.idwall.iddog.R;
 import co.idwall.iddog.ui.activity.LoginActivity;
 
-import static co.idwall.iddog.ui.Constantes.TOKEN;
+import static co.idwall.iddog.Constantes.TOKEN;
 
 public class ActivityUtil {
 

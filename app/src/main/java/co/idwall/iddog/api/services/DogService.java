@@ -1,4 +1,4 @@
-package co.idwall.iddog.services;
+package co.idwall.iddog.api.services;
 
 import java.util.Map;
 

@@ -9,10 +9,9 @@ import android.os.Bundle;
 import co.idwall.iddog.R;
 import co.idwall.iddog.ui.adapter.FeedPaginaAdapter;
 import co.idwall.iddog.util.ActivityUtil;
-import co.idwall.iddog.util.DialogUtil;
 import co.idwall.iddog.util.PreferencesUtil;
 
-import static co.idwall.iddog.ui.Constantes.TOKEN;
+import static co.idwall.iddog.Constantes.TOKEN;
 
 public class FeedActivity extends AppCompatActivity {
 

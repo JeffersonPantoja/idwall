@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import co.idwall.iddog.ui.fragment.FeedFragment;
 
-import static co.idwall.iddog.ui.Constantes.TAB_TITLES;
+import static co.idwall.iddog.Constantes.TAB_TITLES;
 
 public class FeedPaginaAdapter extends FragmentPagerAdapter {
 

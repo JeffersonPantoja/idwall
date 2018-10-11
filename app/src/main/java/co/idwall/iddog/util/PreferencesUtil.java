@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import static android.content.Context.MODE_PRIVATE;
-import static co.idwall.iddog.ui.Constantes.JA_ABRIU_APP;
-import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
-import static co.idwall.iddog.ui.Constantes.TOKEN;
+import static co.idwall.iddog.Constantes.JA_ABRIU_APP;
+import static co.idwall.iddog.Constantes.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.Constantes.TOKEN;
 
 public class PreferencesUtil {
 

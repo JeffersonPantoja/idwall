@@ -13,12 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.idwall.iddog.R;
+import co.idwall.iddog.api.client.LoginProcessado;
 import co.idwall.iddog.controllers.LoginController;
 import co.idwall.iddog.util.ActivityUtil;
+import co.idwall.iddog.util.DialogUtil;
 
-import static co.idwall.iddog.ui.Constantes.EMAIL;
-import static co.idwall.iddog.ui.Constantes.PREFERENCIAS_DO_USUARIO;
-import static co.idwall.iddog.ui.Constantes.TOKEN;
+import static co.idwall.iddog.Constantes.EMAIL;
+import static co.idwall.iddog.Constantes.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.Constantes.TOKEN;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,7 +52,24 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View botao) {
                 ativarLoading();
-                new LoginController(LoginActivity.this).loginEntrar(recuperaEMapeaEmail());
+                new LoginController().loginEntrar(recuperaEMapeaEmail(), processaLogin());
+            }
+        };
+    }
+
+    @NonNull
+    private LoginProcessado processaLogin() {
+        return new LoginProcessado() {
+            @Override
+            public void sucesso(String token) {
+                paraLoading();
+                ActivityUtil.vaiParaOutraActivityComExtra(LoginActivity.this, token, FeedActivity.class);
+            }
+
+            @Override
+            public void falha(String mensagemErro) {
+                paraLoading();
+                new DialogUtil(LoginActivity.this).exibirMensagemErro(mensagemErro);
             }
         };
     }
@@ -72,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
         botaoEntrar.setVisibility(View.VISIBLE);
         loading.setVisibility(View.GONE);
     }
+
+
 
 
 }
