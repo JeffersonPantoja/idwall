@@ -11,4 +11,8 @@
     <string name="imagem_dogfun_expandida">dog fun image expanded</string>
 
     <string name="controller_erro_transmissao">Transmission error</string>
+
+
+    <!--teste-->
+    <string name="login_email_invalido">Email is not valid</string>
 </resources>

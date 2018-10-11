@@ -91,7 +91,7 @@ public class FeedFragment extends Fragment implements  SwipeRefreshLayout.OnRefr
                 if(mensagemErro != null){
                     ActivityUtil.negaAcesso(getContext(), mensagemErro);
                 }else {
-                    new DialogUtil(getContext()).exibirMensagemErro(ERRO_DE_TRANSMISSÃO);
+                    DialogUtil.exibirMensagemErro(getContext(),ERRO_DE_TRANSMISSÃO);
                     configuraRecycleView(new ArrayList<String>());
                 }
             }

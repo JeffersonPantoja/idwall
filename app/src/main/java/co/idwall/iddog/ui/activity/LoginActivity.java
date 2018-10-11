@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void falha(String mensagemErro) {
                 paraLoading();
-                new DialogUtil(LoginActivity.this).exibirMensagemErro(mensagemErro);
+                DialogUtil.exibirMensagemErro(LoginActivity.this, mensagemErro);
             }
         };
     }

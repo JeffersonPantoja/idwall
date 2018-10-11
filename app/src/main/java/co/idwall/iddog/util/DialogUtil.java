@@ -10,11 +10,7 @@ public class DialogUtil {
 
     private Context context;
 
-    public DialogUtil(Context context) {
-        this.context = context;
-    }
-
-    public  void exibirMensagemErro(String mensagemErro) {
+    public static void exibirMensagemErro(Context context, String mensagemErro) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(mensagemErro)
                 .setPositiveButton(R.string.login_entendido, new DialogInterface.OnClickListener() {
