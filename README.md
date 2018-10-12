@@ -12,7 +12,7 @@ App para participação do desafio da idwall
 
 ## Para executar o projeto
 - Utilizar o Android Studio e fazer os procedimentos padrões;
-- As informações de assinatura estão juntas com o projeto para a criarção de um release, mas é claro você pode criar a sua própria assinatura;
+- As informações de assinatura estão juntas com o projeto para a criarção de um release, mas é claro que você pode criar a sua própria assinatura;
 
 ## Bibliotecas utilizadas e motivos
 - **Retrofit:** Além da afinidade, ela é excencial, pois encapsula toda a parte estrutural, dessa forma eu dediquei mais tempo ao que realmente importa no desenvolvimento do app;
