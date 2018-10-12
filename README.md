@@ -22,5 +22,6 @@ App para participação do desafio da idwall
 
 ## Dificuldades
 - Tive várias dificuldade para criar os teste, pois não tinha experiência alguma e precisei estudar tutorias na internet e em aulas da plataforma Alura;
-- Tive dificuldade para criar uma imagem expandida dos cães ao clicar em uma delas, acabei criando outra activity para exibir apenas a imagem clicada.
+- Tive dificuldade para criar uma imagem expandida dos cães ao clicar em uma delas, acabei criando outra activity para exibir apenas a imagem clicada;
+- Tive dificuldade para criar paginas com tabs, pois a implementação que encontrei na [documentação](https://developer.android.com/training/implementing-navigation/lateral) não estava funcionando;
 
