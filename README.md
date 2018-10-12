@@ -1,7 +1,8 @@
 # idwall
 App para participação do desafio da idwall
 
-[apk](https://drive.google.com/open?id=1swxOSIluJnZYuuPElaisQ_2eQrq2yNDn)
+- App desenvolvido para Android utilizando Java.
+- [apk](https://drive.google.com/open?id=1swxOSIluJnZYuuPElaisQ_2eQrq2yNDn)
 
 ## Como executar os testes
 - Execute o teste LoginActivityTest sem ter validado qualquer email.
