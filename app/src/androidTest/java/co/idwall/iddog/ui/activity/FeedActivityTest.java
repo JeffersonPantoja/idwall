@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -29,16 +28,13 @@ import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
@@ -55,10 +51,6 @@ public class FeedActivityTest extends InstrumentationTestCase {
     public ActivityTestRule<FeedActivity> activityTestRule =
             new ActivityTestRule<>(FeedActivity.class, false, true);
 
-    @Before
-    public void init(){
-        activityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
-    }
 
     @Before
     public void setUp() throws Exception {
@@ -68,6 +60,7 @@ public class FeedActivityTest extends InstrumentationTestCase {
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         Constants.BASE_URL = server.url("/").toString();
         Constantes.TAB_TITLES = new String[]{"Teste"};
+        activityTestRule.getActivity().getSupportFragmentManager().beginTransaction();
     }
 
     @Test
