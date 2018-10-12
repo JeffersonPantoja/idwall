@@ -7,26 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.util.List;
-
 import co.idwall.iddog.R;
+import co.idwall.iddog.model.FeedCategoria;
 import co.idwall.iddog.ui.listener.OnItemClickListener;
-import okhttp3.Cache;
-import okhttp3.OkHttpClient;
+
+
 
 public class ListaFeedAdapter extends RecyclerView.Adapter<ListaFeedAdapter.DogViewHolder>{
-
-    private final List<String> urlsDog;
+    private final FeedCategoria feed;
     private final Context context;
     private OnItemClickListener onItemClickListener;
 
-    public ListaFeedAdapter(Context context, List<String> urlsDog){
+    public ListaFeedAdapter(Context context, FeedCategoria feed){
         this.context = context;
-        this.urlsDog = urlsDog;
+        this.feed = feed;
     }
 
 
@@ -42,13 +38,13 @@ public class ListaFeedAdapter extends RecyclerView.Adapter<ListaFeedAdapter.DogV
 
     @Override
     public void onBindViewHolder(DogViewHolder holder, int position) {
-        String urlDog = urlsDog.get(position);
+        String urlDog = feed.getListaUrlsDog().get(position);
         holder.vincula(urlDog);
     }
 
     @Override
     public int getItemCount() {
-        return urlsDog.size();
+        return feed.getListaUrlsDog().size();
     }
 
 
@@ -70,6 +66,7 @@ public class ListaFeedAdapter extends RecyclerView.Adapter<ListaFeedAdapter.DogV
 
         public void vincula(final String urlDog){
             this.urlDog = urlDog;
+            avatar.setTag(urlDog);
             Picasso.get().load(urlDog).into(avatar);
         }
 

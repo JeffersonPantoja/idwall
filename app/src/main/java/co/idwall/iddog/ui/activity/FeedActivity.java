@@ -15,6 +15,7 @@ import static co.idwall.iddog.Constantes.TOKEN;
 
 public class FeedActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -66,7 +66,7 @@ public class DogWebClient {
 
                 switch (response.code()){
                     case 200:
-                        listener.sucesso(response.body().getListaUrlsDog());
+                        listener.sucesso(response.body());
                         break;
                     case 401:
                         try {

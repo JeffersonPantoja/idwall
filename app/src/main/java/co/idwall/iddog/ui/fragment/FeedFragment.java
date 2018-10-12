@@ -20,6 +20,7 @@ import java.util.List;
 import co.idwall.iddog.R;
 import co.idwall.iddog.api.client.FeedProcessado;
 import co.idwall.iddog.controllers.FeedController;
+import co.idwall.iddog.model.FeedCategoria;
 import co.idwall.iddog.ui.activity.DogExpandidoActivity;
 import co.idwall.iddog.ui.adapter.ListaFeedAdapter;
 import co.idwall.iddog.ui.listener.OnItemClickListener;
@@ -29,6 +30,7 @@ import co.idwall.iddog.util.DialogUtil;
 import static android.content.Context.MODE_PRIVATE;
 import static co.idwall.iddog.Constantes.ERRO_DE_TRANSMISSÃO;
 import static co.idwall.iddog.Constantes.PREFERENCIAS_DO_USUARIO;
+import static co.idwall.iddog.Constantes.TAB_TITLES;
 import static co.idwall.iddog.Constantes.TOKEN;
 import static co.idwall.iddog.Constantes.URL_DOG;
 
@@ -81,8 +83,8 @@ public class FeedFragment extends Fragment implements  SwipeRefreshLayout.OnRefr
     private FeedProcessado processaFeed() {
         return new FeedProcessado() {
             @Override
-            public void sucesso(List<String> urlsDog) {
-                configuraRecycleView(urlsDog);
+            public void sucesso(FeedCategoria feed) {
+                configuraRecycleView(feed);
             }
 
             @Override
@@ -91,7 +93,7 @@ public class FeedFragment extends Fragment implements  SwipeRefreshLayout.OnRefr
                     ActivityUtil.negaAcesso(getContext(), mensagemErro);
                 }else {
                     DialogUtil.exibirMensagemErro(getContext(),ERRO_DE_TRANSMISSÃO);
-                    configuraRecycleView(new ArrayList<String>());
+                    configuraRecycleView(new FeedCategoria());
                 }
             }
         };
@@ -99,24 +101,24 @@ public class FeedFragment extends Fragment implements  SwipeRefreshLayout.OnRefr
 
 
 
-    public void configuraRecycleView(List<String> urlsDog) {
+    public void configuraRecycleView(FeedCategoria feed) {
         RecyclerView listaFeed = view.findViewById(R.id.feed_lista);
-        configuraAdapter(urlsDog, listaFeed);
-        configuraViews(urlsDog);
+        configuraAdapter(feed, listaFeed);
+        configuraViews(feed);
 
     }
 
-    private void configuraViews(List<String> urlsDog) {
+    private void configuraViews(FeedCategoria feed) {
         progressBar.setVisibility(View.INVISIBLE);
         swipeToRefresh.setRefreshing(false);
-        if(!urlsDog.isEmpty())
+        if(!feed.getListaUrlsDog().isEmpty())
             swipeInfo.setVisibility(View.INVISIBLE);
         else
             swipeInfo.setVisibility(View.VISIBLE);
     }
 
-    private void configuraAdapter(List<String> listaUrlsDog, RecyclerView listaFeed) {
-        ListaFeedAdapter adapter = new ListaFeedAdapter(getContext(), listaUrlsDog);
+    private void configuraAdapter(FeedCategoria feed, RecyclerView listaFeed) {
+        ListaFeedAdapter adapter = new ListaFeedAdapter(getContext(), feed);
         adapter.setOnItemClickListener(exibiDogExpandido());
         listaFeed.setAdapter(adapter);
     }

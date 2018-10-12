@@ -90,7 +90,7 @@ public class LoginActivityTest extends InstrumentationTestCase {
                 .setResponseCode(400)
                 .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(), MockConstantes.SIGNUP_ERRO)));
 
-        onView(withId(R.id.login_email)).perform(clearText());
+        onView(withId(R.id.login_email)).perform(clearText(),closeSoftKeyboard());
         onView(withId(R.id.login_entrar)).perform(click());
         onView(withText(R.string.login_email_invalido)).inRoot(isDialog()).check(matches(isDisplayed()));
     }
@@ -101,7 +101,7 @@ public class LoginActivityTest extends InstrumentationTestCase {
                 .setResponseCode(400)
                 .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(), MockConstantes.SIGNUP_ERRO)));
 
-        onView(withId(R.id.login_email)).perform(typeText("email invalido"));
+        onView(withId(R.id.login_email)).perform(typeText("email invalido"), closeSoftKeyboard());
         onView(withId(R.id.login_entrar)).perform(click());
         onView(withText(R.string.login_email_invalido)).inRoot(isDialog()).check(matches(isDisplayed()));
     }

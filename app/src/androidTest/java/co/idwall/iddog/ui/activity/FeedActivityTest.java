@@ -29,6 +29,7 @@ import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -36,6 +37,7 @@ import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -65,6 +67,7 @@ public class FeedActivityTest extends InstrumentationTestCase {
         server.start();
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         Constants.BASE_URL = server.url("/").toString();
+        Constantes.TAB_TITLES = new String[]{"Teste"};
     }
 
     @Test
@@ -76,7 +79,7 @@ public class FeedActivityTest extends InstrumentationTestCase {
     }
 
     @Test
-    public void deve_ExibirUmImageView_QuandoBuscarFeedNaApi() throws Exception {
+    public void deve_ExibirUmCardView_QuandoBuscarFeedNaApi() throws Exception {
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(), MockConstantes.FEED_SUCESSO_UM_ITEM)));
@@ -87,15 +90,16 @@ public class FeedActivityTest extends InstrumentationTestCase {
 
     @Test
     public void deve_irParaDogExpandidoActivity_QuandoImageViewEhClicado() throws Exception {
+        Intents.init();
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(), MockConstantes.FEED_SUCESSO)));
 
         activityTestRule.launchActivity(new Intent());
-        Intents.init();
+
         Matcher<Intent> matcher = allOf(
                 hasComponent(DogExpandidoActivity.class.getName()),
-                hasExtraWithKey(Constantes.TOKEN)
+                hasExtraWithKey(Constantes.URL_DOG)
         );
 
         Instrumentation.ActivityResult
@@ -103,13 +107,9 @@ public class FeedActivityTest extends InstrumentationTestCase {
 
         intending(matcher).respondWith(result);
 
-        ViewInteraction viewInteraction = onView(allOf(
-                withId(R.id.feed_lista),
-                isDescendantOfA(withTagValue(is((Object) "https://dog.ceo/api/img/husky/n02110185_10047.jpg"))))
-        );
-        //.perform(actionOnItemAtPosition(0, click()));
-
-        onView(allOf()withId(R.id.feed_lista)).perform(actionOnItemAtPosition(3, click()));
+        onView(withId(R.id.feed_lista))
+                .check(matches(hasDescendant(withTagValue(is((Object)"https://dog.ceo/api/img/husky/n02110185_10047.jpg")))))
+                .perform(click());
 
         intended(matcher);
         Intents.release();
@@ -123,6 +123,27 @@ public class FeedActivityTest extends InstrumentationTestCase {
 
         activityTestRule.launchActivity(new Intent());
         onView(withText("Unauthorized")).inRoot(isDialog()).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void deve_ExibirErroDeTransmissao_QuandoBuscarFeedNaApi() throws Exception {
+        server.enqueue(new MockResponse()
+                .setResponseCode(402)
+                .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(), MockConstantes.FEED_ERRO)));
+
+        activityTestRule.launchActivity(new Intent());
+        onView(withText("Erro de Transmissão")).inRoot(isDialog()).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void deve_ExibirImageViewSwipe_QuandoBuscarFeedNaApi() throws Exception {
+        server.enqueue(new MockResponse()
+                .setResponseCode(402)
+                .setBody(MockHelper.getStringFromFile(getInstrumentation().getContext(), MockConstantes.FEED_ERRO)));
+
+        activityTestRule.launchActivity(new Intent());
+        onView(withText(R.string.login_entendido)).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.feed_swipe_info)).check(matches(isDisplayed()));
     }
 
     @After
